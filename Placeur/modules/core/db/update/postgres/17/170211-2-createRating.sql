@@ -1,0 +1,4 @@
+alter table PLACEUR_RATING add constraint FK_PLACEUR_RATING_USER foreign key (USER_ID) references PLACEUR_USER(ID);
+alter table PLACEUR_RATING add constraint FK_PLACEUR_RATING_PLACE foreign key (PLACE_ID) references PLACEUR_PLACE(ID);
+create index IDX_PLACEUR_RATING_PLACE on PLACEUR_RATING (PLACE_ID);
+create index IDX_PLACEUR_RATING_USER on PLACEUR_RATING (USER_ID);

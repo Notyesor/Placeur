@@ -8,5 +8,6 @@
         <class>com.artamonov.placeur.entity.City</class>
         <class>com.artamonov.placeur.entity.Place</class>
         <class>com.artamonov.placeur.entity.User</class>
+        <class>com.artamonov.placeur.entity.Rating</class>
     </persistence-unit>
 </persistence>
