@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.artamonov.placeur.web.location.LocationBrowse"
+        focusComponent="locationsTable"
+        lookupComponent="locationsTable"
+        messagesPack="com.artamonov.placeur.web.location">
+    <dsContext>
+        <collectionDatasource id="locationsDs"
+                              class="com.artamonov.placeur.entity.Location"
+                              view="_local">
+            <query>
+                <![CDATA[select e from placeur$Location e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="locationsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="locationsTable"
+                datasource="locationsDs">
+            <properties include=".*"/>
+        </filter>
+        <table id="locationsTable"
+               width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="latitude"/>
+                <column id="longitude"/>
+            </columns>
+            <rows datasource="locationsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="locationsTable.create"/>
+                <button id="editBtn"
+                        action="locationsTable.edit"/>
+                <button id="removeBtn"
+                        action="locationsTable.remove"/>
+            </buttonsPanel>
+        </table>
+    </layout>
+</window>

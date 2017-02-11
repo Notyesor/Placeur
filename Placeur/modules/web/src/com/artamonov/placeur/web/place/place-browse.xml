@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.artamonov.placeur.web.place.PlaceBrowse"
+        focusComponent="placesTable"
+        lookupComponent="placesTable"
+        messagesPack="com.artamonov.placeur.web.place">
+    <dsContext>
+        <collectionDatasource id="placesDs"
+                              class="com.artamonov.placeur.entity.Place"
+                              view="place-view">
+            <query>
+                <![CDATA[select e from placeur$Place e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="placesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="placesTable"
+                datasource="placesDs">
+            <properties include=".*"/>
+        </filter>
+        <table id="placesTable"
+               width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="title"/>
+                <column id="description"/>
+                <column id="address"/>
+                <column id="city"/>
+                <column id="location"/>
+                <column id="picture"/>
+            </columns>
+            <rows datasource="placesDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="placesTable.create"/>
+                <button id="editBtn"
+                        action="placesTable.edit"/>
+                <button id="removeBtn"
+                        action="placesTable.remove"/>
+            </buttonsPanel>
+        </table>
+    </layout>
+</window>

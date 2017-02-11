@@ -1,4 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
-
+    <view class="com.artamonov.placeur.entity.City"
+          extends="_local"
+          name="city-view">
+        <property name="location"
+                  view="_minimal"/>
+    </view>
+    <view class="com.artamonov.placeur.entity.Place"
+          extends="_local"
+          name="place-view">
+        <property name="city"
+                  view="_minimal"/>
+        <property name="location"
+                  view="_minimal"/>
+        <property name="picture"
+                  view="_minimal"/>
+    </view>
+    <view class="com.artamonov.placeur.entity.User"
+          extends="_local"
+          name="user-view">
+        <property name="city"
+                  view="_minimal"/>
+        <property name="picture"
+                  view="_minimal"/>
+    </view>
+    <view class="com.artamonov.placeur.entity.Rating"
+          extends="_local"
+          name="rating-view">
+        <property name="user"
+                  view="_minimal"/>
+        <property name="place"
+                  view="_minimal"/>
+    </view>
 </views>

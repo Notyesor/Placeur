@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editCaption"
+        class="com.artamonov.placeur.web.rating.RatingEdit"
+        datasource="ratingDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.artamonov.placeur.web.rating">
+    <dsContext>
+        <datasource id="ratingDs"
+                    class="com.artamonov.placeur.entity.Rating"
+                    view="rating-view"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="ratingDs">
+            <column width="250px">
+                <field id="user"/>
+                <field id="place"/>
+                <field id="mark"/>
+                <field id="isRecomended"/>
+                <field id="description"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

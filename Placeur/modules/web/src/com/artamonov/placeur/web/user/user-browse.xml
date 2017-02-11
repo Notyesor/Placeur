@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.artamonov.placeur.web.user.UserBrowse"
+        focusComponent="usersTable"
+        lookupComponent="usersTable"
+        messagesPack="com.artamonov.placeur.web.user">
+    <dsContext>
+        <collectionDatasource id="usersDs"
+                              class="com.artamonov.placeur.entity.User"
+                              view="user-view">
+            <query>
+                <![CDATA[select e from placeur$User e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="usersTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="usersTable"
+                datasource="usersDs">
+            <properties include=".*"/>
+        </filter>
+        <table id="usersTable"
+               width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="nickname"/>
+                <column id="mail"/>
+                <column id="name"/>
+                <column id="surname"/>
+                <column id="birthday"/>
+                <column id="city"/>
+                <column id="picture"/>
+            </columns>
+            <rows datasource="usersDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="usersTable.create"/>
+                <button id="editBtn"
+                        action="usersTable.edit"/>
+                <button id="removeBtn"
+                        action="usersTable.remove"/>
+            </buttonsPanel>
+        </table>
+    </layout>
+</window>

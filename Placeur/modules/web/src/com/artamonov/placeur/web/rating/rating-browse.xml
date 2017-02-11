@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.artamonov.placeur.web.rating.RatingBrowse"
+        focusComponent="ratingsTable"
+        lookupComponent="ratingsTable"
+        messagesPack="com.artamonov.placeur.web.rating">
+    <dsContext>
+        <collectionDatasource id="ratingsDs"
+                              class="com.artamonov.placeur.entity.Rating"
+                              view="rating-view">
+            <query>
+                <![CDATA[select e from placeur$Rating e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="ratingsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="ratingsTable"
+                datasource="ratingsDs">
+            <properties include=".*"/>
+        </filter>
+        <table id="ratingsTable"
+               width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="user"/>
+                <column id="place"/>
+                <column id="mark"/>
+                <column id="isRecomended"/>
+                <column id="description"/>
+            </columns>
+            <rows datasource="ratingsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="ratingsTable.create"/>
+                <button id="editBtn"
+                        action="ratingsTable.edit"/>
+                <button id="removeBtn"
+                        action="ratingsTable.remove"/>
+            </buttonsPanel>
+        </table>
+    </layout>
+</window>
