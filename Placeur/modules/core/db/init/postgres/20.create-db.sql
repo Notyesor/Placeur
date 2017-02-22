@@ -23,8 +23,8 @@ create index IDX_PLACEUR_USER_CITY on PLACEUR_USER (CITY_ID)^
 create index IDX_PLACEUR_USER_PICTURE on PLACEUR_USER (PICTURE_ID)^
 -- end PLACEUR_USER
 -- begin PLACEUR_RATING
-alter table PLACEUR_RATING add constraint FK_PLACEUR_RATING_USER foreign key (USER_ID) references PLACEUR_USER(ID)^
-alter table PLACEUR_RATING add constraint FK_PLACEUR_RATING_PLACE foreign key (PLACE_ID) references PLACEUR_PLACE(ID)^
+alter table PLACEUR_RATING add constraint FK_PLACEUR_RATING_USER1 foreign key (USER_ID) references PLACEUR_USER(ID)^
+alter table PLACEUR_RATING add constraint FK_PLACEUR_RATING_PLACE1 foreign key (PLACE_ID) references PLACEUR_PLACE(ID)^
 create index IDX_PLACEUR_RATING_PLACE on PLACEUR_RATING (PLACE_ID)^
 create index IDX_PLACEUR_RATING_USER on PLACEUR_RATING (USER_ID)^
 -- end PLACEUR_RATING

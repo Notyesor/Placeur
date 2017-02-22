@@ -4,7 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.chile.core.annotations.NamePattern;
 
+@NamePattern("(%s, %s)|latitude,longitude")
 @Table(name = "PLACEUR_LOCATION")
 @Entity(name = "placeur$Location")
 public class Location extends StandardEntity {

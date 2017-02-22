@@ -7,7 +7,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.chile.core.annotations.NamePattern;
 
+@NamePattern("%s %s|user,place")
 @Table(name = "PLACEUR_RATING")
 @Entity(name = "placeur$Rating")
 public class Rating extends StandardEntity {
@@ -24,11 +26,20 @@ public class Rating extends StandardEntity {
     @Column(name = "MARK", nullable = false)
     protected Double mark;
 
-    @Column(name = "IS_RECOMENDED", nullable = false)
-    protected Boolean isRecomended = false;
+    @Column(name = "IS_RECOMMENDED", nullable = false)
+    protected Boolean isRecommended = false;
 
     @Column(name = "DESCRIPTION")
     protected String description;
+
+    public void setIsRecommended(Boolean isRecommended) {
+        this.isRecommended = isRecommended;
+    }
+
+    public Boolean getIsRecommended() {
+        return isRecommended;
+    }
+
 
     public void setUser(User user) {
         this.user = user;
@@ -52,14 +63,6 @@ public class Rating extends StandardEntity {
 
     public Double getMark() {
         return mark;
-    }
-
-    public void setIsRecomended(Boolean isRecomended) {
-        this.isRecomended = isRecomended;
-    }
-
-    public Boolean getIsRecomended() {
-        return isRecomended;
     }
 
     public void setDescription(String description) {

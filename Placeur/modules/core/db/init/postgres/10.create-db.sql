@@ -105,7 +105,7 @@ create table PLACEUR_RATING (
     USER_ID uuid not null,
     PLACE_ID uuid not null,
     MARK double precision not null,
-    IS_RECOMENDED boolean not null,
+    IS_RECOMMENDED boolean not null,
     DESCRIPTION varchar(255),
     --
     primary key (ID)

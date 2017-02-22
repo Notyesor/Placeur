@@ -34,7 +34,7 @@
                 <column id="user"/>
                 <column id="place"/>
                 <column id="mark"/>
-                <column id="isRecomended"/>
+                <column id="isRecommended"/>
                 <column id="description"/>
             </columns>
             <rows datasource="ratingsDs"/>

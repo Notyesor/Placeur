@@ -7,7 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import com.haulmont.chile.core.annotations.NamePattern;
 
+@NamePattern("%s|title")
 @Table(name = "PLACEUR_CITY")
 @Entity(name = "placeur$City")
 public class City extends StandardEntity {

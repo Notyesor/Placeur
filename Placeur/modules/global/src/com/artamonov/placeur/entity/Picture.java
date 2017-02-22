@@ -4,7 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.chile.core.annotations.NamePattern;
 
+@NamePattern("%s|path")
 @Table(name = "PLACEUR_PICTURE")
 @Entity(name = "placeur$Picture")
 public class Picture extends StandardEntity {
