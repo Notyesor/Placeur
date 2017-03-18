@@ -5,7 +5,6 @@
 package com.artamonov.placeur.recommender.wrapper;
 
 import com.artamonov.placeur.entity.City;
-import com.artamonov.placeur.entity.Location;
 import com.artamonov.placeur.entity.Picture;
 import com.artamonov.placeur.entity.Place;
 
@@ -23,6 +22,14 @@ public class PlaceWrapper {
         this.mark = mark;
     }
 
+    public Double getLatitude() {
+        return place.getLatitude();
+    }
+
+    public Double getLongitude() {
+        return place.getLongitude();
+    }
+
     public String getTitle() {
         return place.getTitle();
     }
@@ -37,10 +44,6 @@ public class PlaceWrapper {
 
     public City getCity() {
         return place.getCity();
-    }
-
-    public Location getLocation() {
-        return place.getLocation();
     }
 
     public Picture getPicture() {

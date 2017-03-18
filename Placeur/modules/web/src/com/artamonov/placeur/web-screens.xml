@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <screen-config xmlns="http://schemas.haulmont.com/cuba/screens.xsd">
     <include file="com/artamonov/placeur/screens.xml"/>
-    <screen id="placeur$Location.browse"
-            template="com/artamonov/placeur/web/location/location-browse.xml"/>
-    <screen id="placeur$Location.edit"
-            template="com/artamonov/placeur/web/location/location-edit.xml"/>
     <screen id="placeur$City.browse"
             template="com/artamonov/placeur/web/city/city-browse.xml"/>
     <screen id="placeur$City.edit"

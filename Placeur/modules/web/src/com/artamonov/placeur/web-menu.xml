@@ -2,7 +2,6 @@
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
     <menu id="application"
           insertBefore="administration">
-        <item id="placeur$Location.browse"/>
         <item id="placeur$City.browse"/>
         <item id="placeur$Picture.browse"/>
         <item id="placeur$Place.browse"/>

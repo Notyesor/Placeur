@@ -3,15 +3,11 @@
     <view class="com.artamonov.placeur.entity.City"
           extends="_local"
           name="city-view">
-        <property name="location"
-                  view="_minimal"/>
     </view>
     <view class="com.artamonov.placeur.entity.Place"
           extends="_local"
           name="place-view">
         <property name="city"
-                  view="_minimal"/>
-        <property name="location"
                   view="_minimal"/>
         <property name="picture"
                   view="_minimal"/>

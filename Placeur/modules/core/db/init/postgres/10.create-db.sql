@@ -1,20 +1,3 @@
--- begin PLACEUR_LOCATION
-create table PLACEUR_LOCATION (
-    ID uuid,
-    VERSION integer not null,
-    CREATE_TS timestamp,
-    CREATED_BY varchar(50),
-    UPDATE_TS timestamp,
-    UPDATED_BY varchar(50),
-    DELETE_TS timestamp,
-    DELETED_BY varchar(50),
-    --
-    LATITUDE double precision not null,
-    LONGITUDE double precision not null,
-    --
-    primary key (ID)
-)^
--- end PLACEUR_LOCATION
 -- begin PLACEUR_PICTURE
 create table PLACEUR_PICTURE (
     ID uuid,
@@ -43,7 +26,8 @@ create table PLACEUR_CITY (
     DELETED_BY varchar(50),
     --
     TITLE varchar(255) not null,
-    LOCATION_ID uuid not null,
+    LATITUDE double precision not null,
+    LONGITUDE double precision not null,
     --
     primary key (ID)
 )^
@@ -63,8 +47,9 @@ create table PLACEUR_PLACE (
     DESCRIPTION varchar(255),
     ADDRESS varchar(255) not null,
     CITY_ID uuid not null,
-    LOCATION_ID uuid not null,
     PICTURE_ID uuid,
+    LATITUDE double precision not null,
+    LONGITUDE double precision not null,
     --
     primary key (ID)
 )^
@@ -82,7 +67,7 @@ create table PLACEUR_USER (
     --
     NICKNAME varchar(255) not null,
     MAIL varchar(255) not null,
-    NAME varchar(255) not null,
+    NAME varchar(40) not null,
     SURNAME varchar(255),
     BIRTHDAY date not null,
     CITY_ID uuid not null,

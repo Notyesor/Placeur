@@ -4,7 +4,8 @@
         class="com.artamonov.placeur.web.city.CityEdit"
         datasource="cityDs"
         focusComponent="fieldGroup"
-        messagesPack="com.artamonov.placeur.web.city">
+        messagesPack="com.artamonov.placeur.web.city"
+        xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd">
     <dsContext>
         <datasource id="cityDs"
                     class="com.artamonov.placeur.entity.City"
@@ -12,16 +13,36 @@
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="windowActions"
-            spacing="true">
-        <fieldGroup id="fieldGroup"
-                    datasource="cityDs">
-            <column width="250px">
-                <field id="title"/>
-                <field id="location"/>
-            </column>
-        </fieldGroup>
-        <frame id="windowActions"
-               screen="editWindowActions"/>
+    <layout spacing="true">
+        <hbox expand="mapBox"
+              height="100%"
+              width="100%">
+            <vbox id="actionBox"
+                  margin="true"
+                  spacing="true"
+                  width="AUTO">
+                <fieldGroup id="fieldGroup"
+                            datasource="cityDs">
+                    <column>
+                        <field id="title"/>
+                        <field id="latitude"/>
+                        <field id="longitude"/>
+                    </column>
+                </fieldGroup>
+                <frame id="windowActions"
+                       screen="editWindowActions"/>
+            </vbox>
+            <vbox id="mapBox"
+                  expand="map"
+                  height="100%"
+                  margin="true"
+                  spacing="true">
+                <chart:mapViewer id="map"
+                                 width="100%"/>
+                <checkBox id="markerLock"
+                          align="BOTTOM_LEFT"
+                          caption="msg://lockMarker"/>
+            </vbox>
+        </hbox>
     </layout>
 </window>

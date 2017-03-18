@@ -24,7 +24,7 @@ public class User extends StandardEntity {
     @Column(name = "MAIL", nullable = false, unique = true)
     protected String mail;
 
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "NAME", nullable = false, length = 40)
     protected String name;
 
     @Column(name = "SURNAME")

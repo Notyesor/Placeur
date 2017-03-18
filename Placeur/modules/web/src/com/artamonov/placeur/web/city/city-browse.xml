@@ -32,7 +32,8 @@
             </actions>
             <columns>
                 <column id="title"/>
-                <column id="location"/>
+                <column id="latitude"/>
+                <column id="longitude"/>
             </columns>
             <rows datasource="citiesDs"/>
             <rowsCount/>
