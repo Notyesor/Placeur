@@ -17,8 +17,6 @@
           name="user-view">
         <property name="city"
                   view="_minimal"/>
-        <property name="picture"
-                  view="_minimal"/>
     </view>
     <view class="com.artamonov.placeur.entity.Rating"
           extends="_local"

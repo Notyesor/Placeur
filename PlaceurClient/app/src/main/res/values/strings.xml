@@ -1,19 +1,28 @@
 <resources>
-    <string name="app_name">Placeur Client</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="app_name">Placeur</string>
+    <string name="title_activity_login">Placeur</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="prompt_password_confirm">Confirm password</string>
-    <string name="action_sign_in">Sign in</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-    <string name="error_password_mismatch">Password mismatch</string>
+    <string name="prompt_nickname">Имя пользователя</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="prompt_confirm_password">Пароль ещё раз</string>
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_name">Имя</string>
+    <string name="prompt_surname">Фамилия</string>
+    <string name="prompt_city">Город</string>
+    <string name="action_sign_in">Войти</string>
+    <string name="action_sign_in_short">Войти</string>
+    <string name="action_sign_up">Регистрация</string>
+    <string name="action_sign_up_short">Регистрация</string>
+    <string name="error_invalid_login">Имя пользователя слишком короткое</string>
+    <string name="error_invalid_password">Пароль слишком короткий</string>
+    <string name="error_incorrect_password">Неправильный пароль</string>
+    <string name="error_field_required">Это поле нужно заполнить</string>
+    <string name="permission_rationale">"Разрешения на доступ к контенту необходимы для доработки электронной почты."</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="cities">
+        <item>Самара</item>
+    </string-array>
 </resources>

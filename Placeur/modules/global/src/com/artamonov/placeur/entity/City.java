@@ -15,7 +15,7 @@ import com.haulmont.chile.core.annotations.NamePattern;
 public class City extends StandardEntity {
     private static final long serialVersionUID = 3610473268907906531L;
 
-    @Column(name = "TITLE", nullable = false)
+    @Column(name = "TITLE", nullable = false, length = 50)
     protected String title;
 
     @Column(name = "LATITUDE", nullable = false)

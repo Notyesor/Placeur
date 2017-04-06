@@ -6,7 +6,7 @@ package com.artamonov.placeur.recommender;
 
 import java.util.List;
 
-public class CosRecommender extends Recommender {
+class CosRecommender extends Recommender {
     @Override
     double calculateSimilarity(List<Double> user1, List<Double> user2) {
         double a = 0, b = 0, c = 0;

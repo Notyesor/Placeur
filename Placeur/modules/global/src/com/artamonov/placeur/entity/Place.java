@@ -15,7 +15,7 @@ import com.haulmont.chile.core.annotations.NamePattern;
 public class Place extends StandardEntity {
     private static final long serialVersionUID = 66241051431767419L;
 
-    @Column(name = "TITLE", nullable = false)
+    @Column(name = "TITLE", nullable = false, length = 50)
     protected String title;
 
     @Column(name = "DESCRIPTION")

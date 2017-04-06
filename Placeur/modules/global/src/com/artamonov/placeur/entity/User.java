@@ -18,16 +18,16 @@ import com.haulmont.chile.core.annotations.NamePattern;
 public class User extends StandardEntity {
     private static final long serialVersionUID = -4027079533558603751L;
 
-    @Column(name = "NICKNAME", nullable = false, unique = true)
+    @Column(name = "NICKNAME", nullable = false, unique = true, length = 20)
     protected String nickname;
 
     @Column(name = "MAIL", nullable = false, unique = true)
     protected String mail;
 
-    @Column(name = "NAME", nullable = false, length = 40)
+    @Column(name = "NAME", nullable = false, length = 50)
     protected String name;
 
-    @Column(name = "SURNAME")
+    @Column(name = "SURNAME", length = 50)
     protected String surname;
 
     @Temporal(TemporalType.DATE)
@@ -38,9 +38,18 @@ public class User extends StandardEntity {
     @JoinColumn(name = "CITY_ID")
     protected City city;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PICTURE_ID")
-    protected Picture picture;
+
+    @Column(name = "PASSWORD", nullable = false)
+    protected String password;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
@@ -88,14 +97,6 @@ public class User extends StandardEntity {
 
     public City getCity() {
         return city;
-    }
-
-    public void setPicture(Picture picture) {
-        this.picture = picture;
-    }
-
-    public Picture getPicture() {
-        return picture;
     }
 
 

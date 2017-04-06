@@ -37,7 +37,7 @@
                 <column id="surname"/>
                 <column id="birthday"/>
                 <column id="city"/>
-                <column id="picture"/>
+                <column id="password"/>
             </columns>
             <rows datasource="usersDs"/>
             <rowsCount/>

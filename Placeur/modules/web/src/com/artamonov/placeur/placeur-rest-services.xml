@@ -4,5 +4,12 @@
         <method name="makeRecommendation">
             <param name="id"/>
         </method>
+        <method name="getTopPlaces"/>
+    </service>
+    <service name="placeur_AuthorizationService">
+        <method name="login">
+            <param name="login"/>
+            <param name="password"/>
+        </method>
     </service>
 </services>

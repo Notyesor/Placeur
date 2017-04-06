@@ -23,7 +23,7 @@
                 <field id="surname"/>
                 <field id="birthday"/>
                 <field id="city"/>
-                <field id="picture"/>
+                <field id="password"/>
             </column>
         </fieldGroup>
         <frame id="windowActions"
