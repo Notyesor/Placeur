@@ -26,6 +26,8 @@
                        value="com.artamonov.placeur.service.RatingService"/>
                 <entry key="placeur_AuthorizationService"
                        value="com.artamonov.placeur.service.AuthorizationService"/>
+                <entry key="placeur_DatabaseService"
+                       value="com.artamonov.placeur.service.DatabaseService"/>
             </map>
         </property>
     </bean>

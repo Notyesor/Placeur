@@ -28,10 +28,6 @@ public class Place extends StandardEntity {
     @JoinColumn(name = "CITY_ID")
     protected City city;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PICTURE_ID")
-    protected Picture picture;
-
     @Column(name = "LATITUDE", nullable = false)
     protected Double latitude;
 
@@ -85,14 +81,6 @@ public class Place extends StandardEntity {
 
     public City getCity() {
         return city;
-    }
-
-    public void setPicture(Picture picture) {
-        this.picture = picture;
-    }
-
-    public Picture getPicture() {
-        return picture;
     }
 
 

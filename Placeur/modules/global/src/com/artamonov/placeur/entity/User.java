@@ -30,10 +30,6 @@ public class User extends StandardEntity {
     @Column(name = "SURNAME", length = 50)
     protected String surname;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "BIRTHDAY", nullable = false)
-    protected Date birthday;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CITY_ID")
     protected City city;
@@ -81,14 +77,6 @@ public class User extends StandardEntity {
 
     public String getSurname() {
         return surname;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public Date getBirthday() {
-        return birthday;
     }
 
     public void setCity(City city) {

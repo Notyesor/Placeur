@@ -3,7 +3,6 @@
     <menu id="application"
           insertBefore="administration">
         <item id="placeur$City.browse"/>
-        <item id="placeur$Picture.browse"/>
         <item id="placeur$Place.browse"/>
         <item id="placeur$User.browse"/>
         <item id="placeur$Rating.browse"/>

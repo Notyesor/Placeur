@@ -35,7 +35,6 @@
                 <column id="mail"/>
                 <column id="name"/>
                 <column id="surname"/>
-                <column id="birthday"/>
                 <column id="city"/>
                 <column id="password"/>
             </columns>

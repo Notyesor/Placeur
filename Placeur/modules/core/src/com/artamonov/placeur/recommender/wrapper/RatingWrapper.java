@@ -31,10 +31,6 @@ public class RatingWrapper {
         return mark;
     }
 
-    public Boolean getIsRecommended() {
-        return rating.getIsRecommended();
-    }
-
     public String getDescription() {
         return rating.getDescription();
     }

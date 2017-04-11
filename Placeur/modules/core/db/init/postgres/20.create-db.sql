@@ -1,12 +1,6 @@
--- begin PLACEUR_PICTURE
-create unique index IDX_PLACEUR_PICTURE_UK_PATH on PLACEUR_PICTURE (PATH) where DELETE_TS is null ^
--- end PLACEUR_PICTURE
-
 -- begin PLACEUR_PLACE
 alter table PLACEUR_PLACE add constraint FK_PLACEUR_PLACE_CITY1 foreign key (CITY_ID) references PLACEUR_CITY(ID)^
-alter table PLACEUR_PLACE add constraint FK_PLACEUR_PLACE_PICTURE1 foreign key (PICTURE_ID) references PLACEUR_PICTURE(ID)^
 create index IDX_PLACEUR_PLACE_CITY on PLACEUR_PLACE (CITY_ID)^
-create index IDX_PLACEUR_PLACE_PICTURE on PLACEUR_PLACE (PICTURE_ID)^
 -- end PLACEUR_PLACE
 -- begin PLACEUR_USER
 alter table PLACEUR_USER add constraint FK_PLACEUR_USER_CITY1 foreign key (CITY_ID) references PLACEUR_CITY(ID)^

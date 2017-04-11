@@ -1,18 +1,10 @@
-/*
- * TODO Copyright
- */
-
 package com.artamonov.placeur.recommender.wrapper;
 
 import com.artamonov.placeur.entity.City;
-import com.artamonov.placeur.entity.Picture;
 import com.artamonov.placeur.entity.Place;
 
 import java.util.UUID;
 
-/**
- * Created by Bacq on 21.02.2017.
- */
 public class PlaceWrapper {
     private Place place;
     private double mark;
@@ -44,10 +36,6 @@ public class PlaceWrapper {
 
     public City getCity() {
         return place.getCity();
-    }
-
-    public Picture getPicture() {
-        return place.getPicture();
     }
 
     public UUID getId() {

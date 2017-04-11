@@ -20,7 +20,6 @@
                 <field id="user"/>
                 <field id="place"/>
                 <field id="mark"/>
-                <field id="isRecommended"/>
                 <field id="description"/>
             </column>
         </fieldGroup>

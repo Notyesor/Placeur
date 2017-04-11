@@ -5,10 +5,6 @@
             template="com/artamonov/placeur/web/city/city-browse.xml"/>
     <screen id="placeur$City.edit"
             template="com/artamonov/placeur/web/city/city-edit.xml"/>
-    <screen id="placeur$Picture.edit"
-            template="com/artamonov/placeur/web/picture/picture-edit.xml"/>
-    <screen id="placeur$Picture.browse"
-            template="com/artamonov/placeur/web/picture/picture-browse.xml"/>
     <screen id="placeur$Place.edit"
             template="com/artamonov/placeur/web/place/place-edit.xml"/>
     <screen id="placeur$Place.browse"

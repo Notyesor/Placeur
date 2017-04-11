@@ -23,6 +23,7 @@ import com.artamonov.placeurclient.activity.MainActivity;
 import com.artamonov.placeurclient.dto.Token;
 import com.artamonov.placeurclient.service.ApiFactory;
 import com.artamonov.placeurclient.service.AuthService;
+import com.artamonov.placeurclient.service.TokenStore;
 
 import java.io.IOException;
 
@@ -203,6 +204,7 @@ public class SignInFragment extends Fragment {
                 } else {
                     Activity parentActivity = getActivity();
                     System.out.println(mToken.getValue());
+                    TokenStore.setToken(getActivity().getApplication().getApplicationContext(), mToken);
                     parentActivity.startActivity(new Intent(parentActivity, MainActivity.class));
                     parentActivity.finish();
                 }

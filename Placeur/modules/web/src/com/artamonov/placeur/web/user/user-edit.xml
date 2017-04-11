@@ -21,7 +21,6 @@
                 <field id="mail"/>
                 <field id="name"/>
                 <field id="surname"/>
-                <field id="birthday"/>
                 <field id="city"/>
                 <field id="password"/>
             </column>

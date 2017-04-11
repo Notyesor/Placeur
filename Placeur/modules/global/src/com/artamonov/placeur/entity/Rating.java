@@ -26,19 +26,8 @@ public class Rating extends StandardEntity {
     @Column(name = "MARK", nullable = false)
     protected Double mark;
 
-    @Column(name = "IS_RECOMMENDED", nullable = false)
-    protected Boolean isRecommended = false;
-
     @Column(name = "DESCRIPTION")
     protected String description;
-
-    public void setIsRecommended(Boolean isRecommended) {
-        this.isRecommended = isRecommended;
-    }
-
-    public Boolean getIsRecommended() {
-        return isRecommended;
-    }
 
 
     public void setUser(User user) {
