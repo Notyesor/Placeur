@@ -15,35 +15,50 @@ public class DatabaseServiceBean implements DatabaseService {
     @Inject
     private Metadata metadata;
 
-    private ICityDAO cityDAO = new CityDAO(persistence, metadata);
-    private IPlaceDAO placeDAO = new PlaceDAO(persistence, metadata);
-    private IUserDAO userDAO = new UserDAO(persistence, metadata);
-    private IRatingDAO ratingDAO = new RatingDAO(persistence, metadata);
-    private ITokenDAO tokenDAO = new TokenDAO(persistence, metadata);
+    private ICityDAO cityDAO;
+    private IPlaceDAO placeDAO;
+    private IUserDAO userDAO;
+    private IRatingDAO ratingDAO;
+    private ITokenDAO tokenDAO;
 
 
     @Override
     public ICityDAO CITY() {
+        if (cityDAO == null) {
+            cityDAO = new CityDAO(persistence, metadata);
+        }
         return cityDAO;
     }
 
     @Override
     public IPlaceDAO PLACE() {
+        if (placeDAO == null) {
+            placeDAO = new PlaceDAO(persistence, metadata);
+        }
         return placeDAO;
     }
 
     @Override
     public IUserDAO USER() {
+        if (userDAO == null) {
+            userDAO = new UserDAO(persistence, metadata);
+        }
         return userDAO;
     }
 
     @Override
     public IRatingDAO RATING() {
+        if (ratingDAO == null) {
+            ratingDAO = new RatingDAO(persistence, metadata);
+        }
         return ratingDAO;
     }
 
     @Override
     public ITokenDAO TOKEN() {
+        if (tokenDAO == null) {
+            tokenDAO = new TokenDAO(persistence, metadata);
+        }
         return tokenDAO;
     }
 }

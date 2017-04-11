@@ -22,7 +22,7 @@
     <http auto-config="true"
           use-expressions="true"
           authentication-manager-ref="portalAuthenticationManager">
-        <!-- login & registration -->
+        <!-- signin & registration -->
         <intercept-url pattern="/login" access="permitAll"/>
 
         <!-- index page -->

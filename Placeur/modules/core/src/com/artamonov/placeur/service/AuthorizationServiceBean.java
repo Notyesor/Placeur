@@ -1,63 +1,50 @@
 package com.artamonov.placeur.service;
 
-import com.artamonov.placeur.entity.Token;
-import com.artamonov.placeur.entity.User;
+import com.artamonov.placeur.dto.TokenDTO;
+import com.artamonov.placeur.dto.UserDTO;
 import com.artamonov.placeur.service.auth.Tokenizer;
-import com.haulmont.cuba.core.EntityManager;
-import com.haulmont.cuba.core.Persistence;
-import com.haulmont.cuba.core.Transaction;
-import com.haulmont.cuba.core.global.Metadata;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
 
 @Service(AuthorizationService.NAME)
 public class AuthorizationServiceBean implements AuthorizationService {
 
     @Inject
-    Metadata metadata;
-    @Inject
-    Persistence persistence;
+    private DatabaseService databaseService;
 
     @Override
-    public String login(String login, String password) {
-        if (onLoginSuccess(login, password)) {
-            String token = Tokenizer.createToken(login, password);
-            try (Transaction transaction = persistence.createTransaction()) {
-                EntityManager em = persistence.getEntityManager();
-                User user = (User) em.createQuery("SELECT u FROM placeur$User u WHERE u.nickname = :login")
-                        .setParameter("login", login).getSingleResult();
-                try {
-                    Token oldToken = (Token) em.createQuery("SELECT t FROM placeur$Token t WHERE t.user.id = :userId")
-                            .setParameter("userId", user.getId()).getSingleResult();
-                    oldToken.setToken(token);
-                } catch (NullPointerException | NoResultException e) {
-                    Token newToken = metadata.create(Token.class);
-                    newToken.setUser(user);
-                    newToken.setToken(token);
-                    em.persist(newToken);
+    public String signin(String nickname, String password) {
+        if (onLoginSuccess(nickname, password)) {
+            String token = Tokenizer.createToken(nickname, password);
+
+            UserDTO userDTO = databaseService.USER().findByNickname(nickname);
+            if (userDTO != null) {
+                TokenDTO tokenDTO = databaseService.TOKEN().findByUserId(userDTO.getId());
+                if (tokenDTO != null) {
+                    tokenDTO.setValue(token);
+                    boolean status = databaseService.TOKEN().update(tokenDTO);
+                    if (status) {
+                        return "{token: '" + token + "'}";
+                    } else {
+                        return "{token: 'fail";
+                    }
+                } else {
+                    boolean status = databaseService.TOKEN().create(userDTO.getId(), token);
+                    if (status) {
+                        return "{token: '" + token + "'}";
+                    } else {
+                        return "{token: 'fail";
+                    }
                 }
-                transaction.commit();
-                return "{token: '" + token + "'}";
-            } catch (Exception e) {
-                System.out.println(e.getLocalizedMessage());
             }
         } else return "{token: 'invalidData'}";
         return "{token: 'fail'}";
     }
 
-    private boolean onLoginSuccess(String login, String password) {
-        try(Transaction transaction = persistence.createTransaction()) {
-            EntityManager em = persistence.getEntityManager();
-            try {
-                User user = (User) em.createQuery("SELECT u FROM placeur$User u WHERE u.nickname = :login AND u.password = :password")
-                        .setParameter("login", login).setParameter("password", password).getSingleResult();
-                return true;
-            } catch (NoResultException e) {
-                return false;
-            }
-        }
+    private boolean onLoginSuccess(String nickname, String password) {
+        UserDTO userDTO = databaseService.USER().findByNickname(nickname);
+        return userDTO != null && userDTO.getPassword().equals(password);
     }
 
     @Override

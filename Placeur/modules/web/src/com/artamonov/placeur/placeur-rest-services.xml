@@ -7,8 +7,8 @@
         <method name="getTopPlaces"/>
     </service>
     <service name="placeur_AuthorizationService">
-        <method name="login">
-            <param name="login"/>
+        <method name="signin">
+            <param name="nickname"/>
             <param name="password"/>
         </method>
     </service>

@@ -8,6 +8,6 @@ import retrofit2.http.Query;
 
 public interface AuthService {
 
-    @GET("/app/rest/v2/services/placeur_AuthorizationService/login")
-    Call<Token> signIn(@Query("login") String nickname, @Query("password") String password);
+    @GET("/app/rest/v2/services/placeur_AuthorizationService/signin")
+    Call<Token> signIn(@Query("nickname") String nickname, @Query("password") String password);
 }

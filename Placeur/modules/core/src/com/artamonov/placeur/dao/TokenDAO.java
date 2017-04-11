@@ -51,6 +51,19 @@ public class TokenDAO implements ITokenDAO {
     }
 
     @Override
+    public TokenDTO findByUserId(UUID id) {
+        try (Transaction transaction = persistence.createTransaction()) {
+            EntityManager em = persistence.getEntityManager();
+            Token token = (Token) em.createQuery("SELECT t FROM placeur$Token t WHERE t.user.id = :userId")
+                    .setParameter("userId", id)
+                    .getSingleResult();
+            return new TokenDTO(token.getId(), token.getUser().getId(), token.getToken());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     public boolean update(TokenDTO tokenDTO) {
         try (Transaction transaction = persistence.createTransaction()) {
             EntityManager em = persistence.getEntityManager();

@@ -54,6 +54,20 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
+    public UserDTO findByNickname(String nickname) {
+        try (Transaction transaction = persistence.createTransaction()) {
+            EntityManager em = persistence.getEntityManager();
+            User user = (User) em.createQuery("SELECT u FROM placeur$User u WHERE u.nickname = :nickname")
+                    .setParameter("nickname", nickname)
+                    .getSingleResult();
+            return new UserDTO(user.getId(), user.getNickname(), user.getMail(),
+                    user.getName(), user.getSurname(), user.getCity().getId(), user.getPassword());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     public boolean update(UserDTO userDTO) {
         try (Transaction transaction = persistence.createTransaction()) {
             EntityManager em = persistence.getEntityManager();

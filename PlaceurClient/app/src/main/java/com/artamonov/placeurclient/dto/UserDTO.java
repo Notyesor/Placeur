@@ -1,4 +1,4 @@
-package com.artamonov.placeur.dto;
+package com.artamonov.placeurclient.dto;
 
 import com.google.gson.annotations.SerializedName;
 
