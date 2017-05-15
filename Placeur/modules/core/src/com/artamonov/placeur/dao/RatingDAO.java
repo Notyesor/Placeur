@@ -40,11 +40,64 @@ public class RatingDAO implements IRatingDAO {
     }
 
     @Override
+    public List<RatingDTO> findAllWithoutUserId(UUID userId) {
+        try (Transaction transaction = persistence.createTransaction()) {
+            EntityManager em = persistence.getEntityManager();
+            List<Rating> ratingList = em.createQuery(
+                    "SELECT r FROM placeur$Rating r WHERE NOT r.user.id = :userId")
+                    .setParameter("userId", userId)
+                    .getResultList();
+            List<RatingDTO> ratingDTOList = new ArrayList<>();
+            for (Rating rating : ratingList) {
+                ratingDTOList.add(new RatingDTO(rating.getId(), rating.getUser().getId(),
+                        rating.getPlace().getId(), rating.getMark(), rating.getDescription()));
+            }
+            return ratingDTOList;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     public RatingDTO findById(UUID id) {
         try (Transaction transaction = persistence.createTransaction()) {
             EntityManager em = persistence.getEntityManager();
             Rating rating = (Rating) em.createQuery("SELECT r FROM placeur$Rating r WHERE r.id = :ratingId")
                     .setParameter("ratingId", id)
+                    .getSingleResult();
+            return new RatingDTO(rating.getId(), rating.getUser().getId(),
+                    rating.getPlace().getId(), rating.getMark(), rating.getDescription());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<RatingDTO> findByPlace(UUID id) {
+        try (Transaction transaction = persistence.createTransaction()) {
+            EntityManager em = persistence.getEntityManager();
+            List<Rating> ratingList = em.createQuery("SELECT r FROM placeur$Rating r WHERE r.place.id = :placeId")
+                    .setParameter("placeId", id)
+                    .getResultList();
+            List<RatingDTO> ratingDTOList = new ArrayList<>();
+            for (Rating rating : ratingList) {
+                ratingDTOList.add(new RatingDTO(rating.getId(), rating.getUser().getId(),
+                        rating.getPlace().getId(), rating.getMark(), rating.getDescription()));
+            }
+            return ratingDTOList;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public RatingDTO findByPlaceAndUser(UUID userId, UUID placeId) {
+        try (Transaction transaction = persistence.createTransaction()) {
+            EntityManager em = persistence.getEntityManager();
+            Rating rating = (Rating) em.createQuery(
+                    "SELECT r FROM placeur$Rating r WHERE r.user.id = :userId AND r.place.id = :placeId")
+                    .setParameter("userId", userId)
+                    .setParameter("placeId", placeId)
                     .getSingleResult();
             return new RatingDTO(rating.getId(), rating.getUser().getId(),
                     rating.getPlace().getId(), rating.getMark(), rating.getDescription());

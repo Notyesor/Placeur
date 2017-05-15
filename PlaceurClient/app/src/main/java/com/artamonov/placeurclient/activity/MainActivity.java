@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.artamonov.placeurclient.R;
@@ -12,13 +13,23 @@ import com.artamonov.placeurclient.activity.adapter.TabPagerAdapter;
 import com.artamonov.placeurclient.activity.fragment.RecommendationsFragment;
 import com.artamonov.placeurclient.activity.fragment.SettingsFragment;
 import com.artamonov.placeurclient.activity.fragment.TopPlacesFragment;
+import com.artamonov.placeurclient.dto.MarkedPlaceDTO;
+import com.artamonov.placeurclient.service.ApiFactory;
 import com.artamonov.placeurclient.service.TokenStore;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -26,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private TabLayout tabLayout;
     private Toolbar toolbar;
     SupportMapFragment mapFragment;
+    List<MarkedPlaceDTO> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +58,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         tabLayout.setupWithViewPager(viewPager);
         Toast toast = Toast.makeText(getApplicationContext(), TokenStore.getToken(getApplication().getApplicationContext()).getValue(), Toast.LENGTH_SHORT);
         toast.show();
+
+
+        Call<List<MarkedPlaceDTO>> callback = ApiFactory.getRatingService().getTopPlaces();
+        callback.enqueue(new Callback<List<MarkedPlaceDTO>>() {
+            @Override
+            public void onResponse(Call<List<MarkedPlaceDTO>> call, Response<List<MarkedPlaceDTO>> response) {
+                list = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<MarkedPlaceDTO>> call, Throwable t) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Ошибка!", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -61,10 +88,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng sydney = new LatLng(-50.3, -50.5);
-        MarkerOptions marker = new MarkerOptions().position(sydney).title("Marker in Sydney").draggable(true);
-        googleMap.addMarker(marker);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        googleMap.setMaxZoomPreference(googleMap.getMaxZoomLevel());
+        for (MarkedPlaceDTO placeDTO : list) {
+            LatLng latLng = new LatLng(placeDTO.getPlaceDTO().getLatitude(), placeDTO.getPlaceDTO().getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(latLng)
+                    .title(placeDTO.getPlaceDTO().getTitle())
+                    .snippet(placeDTO.getPlaceDTO().getAddress())
+                    .draggable(false);
+            Marker marker = googleMap.addMarker(markerOptions);
+            marker.setTag(placeDTO);
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+            googleMap.setOnInfoWindowClickListener(new OnPlaceClickListener());
+            googleMap.setBuildingsEnabled(true);
+        }
+    }
+
+    private class OnPlaceClickListener implements GoogleMap.OnInfoWindowClickListener {
+
+
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+
+        }
     }
 }

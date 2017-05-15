@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.artamonov.placeurclient.R;
 import com.artamonov.placeurclient.activity.MainActivity;
 import com.artamonov.placeurclient.dto.Token;
+import com.artamonov.placeurclient.dto.TokenDTO;
 import com.artamonov.placeurclient.service.ApiFactory;
 import com.artamonov.placeurclient.service.AuthService;
 import com.artamonov.placeurclient.service.TokenStore;
@@ -83,7 +84,7 @@ public class SignInFragment extends Fragment {
         boolean cancel = false;
         View focusView = null;
 
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -148,11 +149,11 @@ public class SignInFragment extends Fragment {
         return password.length() > 3;
     }
 
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mNickname;
         private final String mPassword;
-        private Token mToken;
+        private TokenDTO mToken;
 
         UserLoginTask(String login, String password) {
             mNickname = login;
@@ -161,19 +162,11 @@ public class SignInFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
 
             AuthService service = ApiFactory.getAuthService();
-            Call<Token> call = service.signIn(mNickname, mPassword);
+            Call<TokenDTO> call = service.signIn(mNickname, mPassword);
             try {
-                Response<Token> response = call.execute();
+                Response<TokenDTO> response = call.execute();
                 System.out.println(response.message());
                 if (response.isSuccessful()) {
                     mToken = response.body();
@@ -194,13 +187,10 @@ public class SignInFragment extends Fragment {
             showProgress(false);
 
             if (success && mToken != null) {
-                if (mToken.getValue().equals("invalidData")) {
+                if (mToken.getValue() == null) {
                     Toast toast = Toast.makeText(getContext(), "Неправильное имя пользователя/пароль.", Toast.LENGTH_SHORT);
                     toast.show();
                     mPasswordView.requestFocus();
-                } else if (mToken.getValue().equals("fail")) {
-                    Toast toast = Toast.makeText(getContext(), "Ошибка сервера, попробуйте ещё раз.", Toast.LENGTH_SHORT);
-                    toast.show();
                 } else {
                     Activity parentActivity = getActivity();
                     System.out.println(mToken.getValue());

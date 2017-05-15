@@ -32,11 +32,9 @@
             </actions>
             <columns>
                 <column id="nickname"/>
-                <column id="mail"/>
-                <column id="name"/>
-                <column id="surname"/>
                 <column id="city"/>
                 <column id="password"/>
+                <column id="similarity"/>
             </columns>
             <rows datasource="usersDs"/>
             <rowsCount/>

@@ -4,10 +4,17 @@
     android:layout_height="match_parent"
     tools:context="com.artamonov.placeurclient.activity.fragment.TopPlacesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView" />
 </FrameLayout>

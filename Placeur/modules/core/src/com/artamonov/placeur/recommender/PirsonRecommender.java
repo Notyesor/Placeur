@@ -4,9 +4,15 @@
 
 package com.artamonov.placeur.recommender;
 
+import com.artamonov.placeur.service.DatabaseService;
+
 import java.util.List;
 
 class PirsonRecommender extends Recommender {
+    protected PirsonRecommender(DatabaseService databaseService) {
+        super(databaseService);
+    }
+
     @Override
     double calculateSimilarity(List<Double> user1, List<Double> user2) {
         double middle1 = 0;

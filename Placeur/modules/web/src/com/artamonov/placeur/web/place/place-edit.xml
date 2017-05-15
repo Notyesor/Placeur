@@ -29,7 +29,6 @@
                         <field id="description"/>
                         <field id="address"/>
                         <field id="city"/>
-                        <field id="picture"/>
                         <field id="latitude"/>
                         <field id="longitude"/>
                     </column>

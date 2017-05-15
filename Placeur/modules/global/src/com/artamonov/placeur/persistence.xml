@@ -7,6 +7,5 @@
         <class>com.artamonov.placeur.entity.Place</class>
         <class>com.artamonov.placeur.entity.User</class>
         <class>com.artamonov.placeur.entity.Rating</class>
-        <class>com.artamonov.placeur.entity.Token</class>
     </persistence-unit>
 </persistence>

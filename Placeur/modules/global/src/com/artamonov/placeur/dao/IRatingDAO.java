@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IRatingDAO {
-    public List<RatingDTO> findAll();
-    public RatingDTO findById(UUID id);
-    public boolean update(RatingDTO ratingDTO);
-    public boolean create(UUID user, UUID place, Double mark, String description);
-    public boolean delete(RatingDTO ratingDTO);
+    List<RatingDTO> findAll();
+    List<RatingDTO> findAllWithoutUserId(UUID userId);
+    RatingDTO findById(UUID id);
+    List<RatingDTO> findByPlace(UUID id);
+    RatingDTO findByPlaceAndUser(UUID userId, UUID placeId);
+    boolean update(RatingDTO ratingDTO);
+    boolean create(UUID user, UUID place, Double mark, String description);
+    boolean delete(RatingDTO ratingDTO);
 }

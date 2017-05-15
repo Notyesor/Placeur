@@ -4,9 +4,15 @@
 
 package com.artamonov.placeur.recommender;
 
+import com.artamonov.placeur.service.DatabaseService;
+
 import java.util.List;
 
 class CosRecommender extends Recommender {
+    protected CosRecommender(DatabaseService databaseService) {
+        super(databaseService);
+    }
+
     @Override
     double calculateSimilarity(List<Double> user1, List<Double> user2) {
         double a = 0, b = 0, c = 0;

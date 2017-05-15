@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ICityDAO {
-    public List<CityDTO> findAll();
-    public CityDTO findById(UUID id);
-    public boolean update(CityDTO cityDTO);
-    public boolean create(String title, Double latitude, Double longitude);
-    public boolean delete(CityDTO cityDTO);
+    List<CityDTO> findAll();
+    CityDTO findById(UUID id);
+    boolean update(CityDTO cityDTO);
+    boolean create(String title, Double latitude, Double longitude);
+    boolean delete(CityDTO cityDTO);
 }

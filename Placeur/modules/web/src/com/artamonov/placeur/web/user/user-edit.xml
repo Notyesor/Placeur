@@ -18,11 +18,9 @@
                     datasource="userDs">
             <column width="250px">
                 <field id="nickname"/>
-                <field id="mail"/>
-                <field id="name"/>
-                <field id="surname"/>
                 <field id="city"/>
                 <field id="password"/>
+                <field id="similarity"/>
             </column>
         </fieldGroup>
         <frame id="windowActions"

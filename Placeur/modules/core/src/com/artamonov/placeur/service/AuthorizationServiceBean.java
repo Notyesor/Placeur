@@ -1,8 +1,7 @@
 package com.artamonov.placeur.service;
 
-import com.artamonov.placeur.dto.TokenDTO;
 import com.artamonov.placeur.dto.UserDTO;
-import com.artamonov.placeur.service.auth.Tokenizer;
+import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -16,30 +15,12 @@ public class AuthorizationServiceBean implements AuthorizationService {
     @Override
     public String signin(String nickname, String password) {
         if (onLoginSuccess(nickname, password)) {
-            String token = Tokenizer.createToken(nickname, password);
-
             UserDTO userDTO = databaseService.USER().findByNickname(nickname);
             if (userDTO != null) {
-                TokenDTO tokenDTO = databaseService.TOKEN().findByUserId(userDTO.getId());
-                if (tokenDTO != null) {
-                    tokenDTO.setValue(token);
-                    boolean status = databaseService.TOKEN().update(tokenDTO);
-                    if (status) {
-                        return "{token: '" + token + "'}";
-                    } else {
-                        return "{token: 'fail";
-                    }
-                } else {
-                    boolean status = databaseService.TOKEN().create(userDTO.getId(), token);
-                    if (status) {
-                        return "{token: '" + token + "'}";
-                    } else {
-                        return "{token: 'fail";
-                    }
-                }
+                return new Gson().toJson(userDTO);
             }
-        } else return "{token: 'invalidData'}";
-        return "{token: 'fail'}";
+        }
+        return new Gson().toJson(null);
     }
 
     private boolean onLoginSuccess(String nickname, String password) {

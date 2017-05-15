@@ -10,5 +10,4 @@ public interface DatabaseService {
     IPlaceDAO PLACE();
     IUserDAO USER();
     IRatingDAO RATING();
-    ITokenDAO TOKEN();
 }

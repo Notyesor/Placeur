@@ -35,7 +35,6 @@
                 <column id="description"/>
                 <column id="address"/>
                 <column id="city"/>
-                <column id="picture"/>
                 <column id="latitude"/>
                 <column id="longitude"/>
             </columns>

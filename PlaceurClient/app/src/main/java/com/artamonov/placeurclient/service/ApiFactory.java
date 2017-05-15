@@ -32,6 +32,11 @@ public class ApiFactory {
     }
 
     @NonNull
+    public static RatingService getRatingService() {
+        return getRetrofit().create(RatingService.class);
+    }
+
+    @NonNull
     private static Retrofit getRetrofit() {
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -44,6 +49,6 @@ public class ApiFactory {
     }
 
     private class BuildConfig {
-        private static final String API_ENDPOINT = "http://192.168.0.19:8080";
+        private static final String API_ENDPOINT = "http://192.168.43.92:8080";
     }
 }

@@ -19,7 +19,6 @@ public class DatabaseServiceBean implements DatabaseService {
     private IPlaceDAO placeDAO;
     private IUserDAO userDAO;
     private IRatingDAO ratingDAO;
-    private ITokenDAO tokenDAO;
 
 
     @Override
@@ -52,13 +51,5 @@ public class DatabaseServiceBean implements DatabaseService {
             ratingDAO = new RatingDAO(persistence, metadata);
         }
         return ratingDAO;
-    }
-
-    @Override
-    public ITokenDAO TOKEN() {
-        if (tokenDAO == null) {
-            tokenDAO = new TokenDAO(persistence, metadata);
-        }
-        return tokenDAO;
     }
 }

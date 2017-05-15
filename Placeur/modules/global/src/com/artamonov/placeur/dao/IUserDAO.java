@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IUserDAO {
-    public List<UserDTO> findAll();
-    public UserDTO findById(UUID id);
-    public UserDTO findByNickname(String nickname);
-    public boolean update(UserDTO userDTO);
-    public boolean create(String nickname, String mail, String name, String surname, UUID city, String password);
-    public boolean delete(UserDTO userDTO);
+    List<UserDTO> findAll();
+    List<UserDTO> findAllWithoutId(UUID id);
+    UserDTO findById(UUID id);
+    UserDTO findByNickname(String nickname);
+    boolean update(UserDTO userDTO);
+    boolean create(String nickname, UUID cityId, String password, Integer similarity);
+    boolean delete(UserDTO userDTO);
 }
