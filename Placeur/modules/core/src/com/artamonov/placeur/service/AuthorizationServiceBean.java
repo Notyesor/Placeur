@@ -1,6 +1,6 @@
 package com.artamonov.placeur.service;
 
-import com.artamonov.placeur.dto.UserDTO;
+import com.artamonov.placeur.dto.*;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +18,10 @@ public class AuthorizationServiceBean implements AuthorizationService {
         if (onLoginSuccess(nickname, password)) {
             UserDTO userDTO = databaseService.USER().findByNickname(nickname);
             if (userDTO != null) {
-                return new Gson().toJson(userDTO);
+                return new Gson().toJson(new AuthToken(userDTO, "ok"));
             }
         }
-        return new Gson().toJson(null);
+        return new Gson().toJson(new AuthToken(null, "invalid"));
     }
 
     private boolean onLoginSuccess(String nickname, String password) {
@@ -35,9 +35,9 @@ public class AuthorizationServiceBean implements AuthorizationService {
             boolean status = databaseService.USER().create(nickname, cityId, password, 0);
             if (status) {
                 UserDTO userDTO = databaseService.USER().findByNickname(nickname);
-                return new Gson().toJson(userDTO);
+                return new Gson().toJson(new AuthToken(userDTO, "ok"));
             }
         }
-        return new Gson().toJson(null);
+        return new Gson().toJson(new AuthToken(null, "invalid"));
     }
 }

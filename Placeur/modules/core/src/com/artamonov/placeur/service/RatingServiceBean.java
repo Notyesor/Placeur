@@ -1,8 +1,6 @@
 package com.artamonov.placeur.service;
 
-import com.artamonov.placeur.dto.MarkedPlaceDTO;
-import com.artamonov.placeur.dto.PlaceDTO;
-import com.artamonov.placeur.dto.RatingDTO;
+import com.artamonov.placeur.dto.*;
 import com.artamonov.placeur.recommender.RecommenderFactory;
 import com.artamonov.placeur.recommender.Recommenders;
 import com.google.gson.Gson;
@@ -16,16 +14,14 @@ import java.util.*;
 public class RatingServiceBean implements RatingService {
 
     @Inject
-    private Persistence persistence;
-    @Inject
     private DatabaseService databaseService;
 
     @Override
-    public String makeRecommendation(String id) {
+    public String getRecommendations(String id) {
         UUID uuid = UUID.fromString(id);
-        List<MarkedPlaceDTO> result = RecommenderFactory.createRecommender(Recommenders.COS, databaseService)
+        List<MarkedPlaceDTO> list = RecommenderFactory.createRecommender(Recommenders.COS, databaseService)
                 .calculateRatings(uuid);
-        return new Gson().toJson(result);
+        return new Gson().toJson(new ListToken(list, "ok"));
     }
 
     @Override
@@ -37,7 +33,7 @@ public class RatingServiceBean implements RatingService {
             list.add(new MarkedPlaceDTO(place, mark));
         }
         list.sort(Comparator.comparing(MarkedPlaceDTO::getMark).reversed());
-        return new Gson().toJson(list);
+        return new Gson().toJson(new ListToken(list, "ok"));
     }
 
     private double getAverageMark(PlaceDTO place) {

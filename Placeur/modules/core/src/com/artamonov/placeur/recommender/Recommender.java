@@ -29,7 +29,9 @@ public abstract class Recommender {
                 firstVector.add(i, rating1 != null ? rating1.getMark() : 0d);
                 secondVector.add(i, rating2 != null ? rating2.getMark() : 0d);
             }
-            similarity.put(currentUser.getId(), calculateSimilarity(firstVector, secondVector));
+            Double sim = calculateSimilarity(firstVector, secondVector);
+            if (Double.isNaN(sim)) sim = 0d;
+            similarity.put(currentUser.getId(), sim);
         }
         List<RatingDTO> ratings = databaseService.RATING().findAllWithoutUserId(user.getId());
         List<MarkedRatingDTO> markedRatings = new ArrayList<>();

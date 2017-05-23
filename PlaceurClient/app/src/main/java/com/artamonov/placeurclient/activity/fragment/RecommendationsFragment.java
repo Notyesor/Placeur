@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.artamonov.placeurclient.R;
+import com.artamonov.placeurclient.dto.ListToken;
 import com.artamonov.placeurclient.dto.MarkedPlaceDTO;
 import com.artamonov.placeurclient.dto.UserDTO;
 import com.artamonov.placeurclient.service.ApiFactory;
@@ -40,11 +41,12 @@ public class RecommendationsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recommendations, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
         UserDTO user = Store.getUser(getActivity().getApplication().getApplicationContext());
-        Call<List<MarkedPlaceDTO>> call = ApiFactory.getRatingService().makeRecommendation(user.getId().toString());
-        call.enqueue(new Callback<List<MarkedPlaceDTO>>() {
+        Call<ListToken> call = ApiFactory.getRatingService().getRecommendations(user.getId().toString());
+        call.enqueue(new Callback<ListToken>() {
             @Override
-            public void onResponse(Call<List<MarkedPlaceDTO>> call, Response<List<MarkedPlaceDTO>> response) {
-                list = response.body();
+            public void onResponse(Call<ListToken> call, Response<ListToken> response) {
+                ListToken token = response.body();
+                list = token.getList();
                 if (list == null) return;
                 String[] array = new String[list.size()];
                 for (int i = 0; i < list.size(); i++) {
@@ -55,7 +57,7 @@ public class RecommendationsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<MarkedPlaceDTO>> call, Throwable t) {
+            public void onFailure(Call<ListToken> call, Throwable t) {
 
             }
         });

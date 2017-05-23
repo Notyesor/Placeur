@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <services xmlns="http://schemas.haulmont.com/cuba/rest-services-v2.xsd">
     <service name="placeur_RatingService">
-        <method name="makeRecommendation">
+        <method name="getRecommendations">
             <param name="id"/>
         </method>
         <method name="getTopPlaces"/>

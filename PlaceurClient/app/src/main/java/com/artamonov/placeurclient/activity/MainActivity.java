@@ -12,7 +12,9 @@ import com.artamonov.placeurclient.activity.adapter.TabPagerAdapter;
 import com.artamonov.placeurclient.activity.fragment.RecommendationsFragment;
 import com.artamonov.placeurclient.activity.fragment.SettingsFragment;
 import com.artamonov.placeurclient.activity.fragment.TopPlacesFragment;
+import com.artamonov.placeurclient.dto.ListToken;
 import com.artamonov.placeurclient.dto.MarkedPlaceDTO;
+import com.artamonov.placeurclient.dto.AuthToken;
 import com.artamonov.placeurclient.dto.UserDTO;
 import com.artamonov.placeurclient.service.ApiFactory;
 import com.artamonov.placeurclient.store.Store;
@@ -60,15 +62,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         toast.show();
 
 
-        Call<List<MarkedPlaceDTO>> callback = ApiFactory.getRatingService().getTopPlaces();
-        callback.enqueue(new Callback<List<MarkedPlaceDTO>>() {
+        Call<ListToken> callback = ApiFactory.getRatingService().getTopPlaces();
+        callback.enqueue(new Callback<ListToken>() {
             @Override
-            public void onResponse(Call<List<MarkedPlaceDTO>> call, Response<List<MarkedPlaceDTO>> response) {
-                list = response.body();
+            public void onResponse(Call<ListToken> call, Response<ListToken> response) {
+                ListToken token = response.body();
+                list = token.getList();
             }
 
             @Override
-            public void onFailure(Call<List<MarkedPlaceDTO>> call, Throwable t) {
+            public void onFailure(Call<ListToken> call, Throwable t) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Ошибка!", Toast.LENGTH_SHORT);
                 toast.show();
             }

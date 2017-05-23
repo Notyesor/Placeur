@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.artamonov.placeurclient.R;
 import com.artamonov.placeurclient.activity.MainActivity;
+import com.artamonov.placeurclient.dto.AuthToken;
 import com.artamonov.placeurclient.dto.UserDTO;
 import com.artamonov.placeurclient.service.ApiFactory;
 import com.artamonov.placeurclient.service.AuthService;
@@ -151,7 +152,7 @@ public class SignInFragment extends Fragment {
 
         private final String mNickname;
         private final String mPassword;
-        private UserDTO mUser;
+        private AuthToken mToken;
 
         UserLoginTask(String login, String password) {
             mNickname = login;
@@ -162,18 +163,16 @@ public class SignInFragment extends Fragment {
         protected Boolean doInBackground(Void... params) {
 
             AuthService service = ApiFactory.getAuthService();
-            Call<UserDTO> call = service.signIn(mNickname, mPassword);
+            Call<AuthToken> call = service.signIn(mNickname, mPassword);
             try {
-                Response<UserDTO> response = call.execute();
+                Response<AuthToken> response = call.execute();
                 System.out.println(response.message());
                 if (response.isSuccessful()) {
-                    mUser = response.body();
+                    mToken = response.body();
                 }
-                if (mUser == null) return false;
+                if (mToken == null) return false;
             } catch (IOException e) {
                 System.out.println(e.getLocalizedMessage());
-                Toast toast = Toast.makeText(getContext(), "Проблемы с соединением", Toast.LENGTH_SHORT);
-                toast.show();
                 return false;
             }
             return true;
@@ -184,16 +183,19 @@ public class SignInFragment extends Fragment {
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
+            if (success && mToken.getName().equals("ok")) {
                 Activity parentActivity = getActivity();
-                System.out.println(mUser.getNickname());
-                Store.setUser(mUser, getActivity().getApplication().getApplicationContext());
+                System.out.println(mToken.getUser());
+                Store.setUser(mToken.getUser(), getActivity().getApplication().getApplicationContext());
                 parentActivity.startActivity(new Intent(parentActivity, MainActivity.class));
                 parentActivity.finish();
-            } else {
+            } else if (mToken != null) {
                 Toast toast = Toast.makeText(getContext(), "Неправильное имя пользователя/пароль.", Toast.LENGTH_SHORT);
                 toast.show();
                 mPasswordView.requestFocus();
+            } else {
+                Toast toast = Toast.makeText(getContext(), "Проблемы с соединением", Toast.LENGTH_SHORT);
+                toast.show();
             }
         }
 

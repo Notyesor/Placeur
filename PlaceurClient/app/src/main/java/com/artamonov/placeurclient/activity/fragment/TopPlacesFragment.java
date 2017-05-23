@@ -1,22 +1,20 @@
 package com.artamonov.placeurclient.activity.fragment;
 
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.artamonov.placeurclient.R;
+import com.artamonov.placeurclient.dto.ListToken;
 import com.artamonov.placeurclient.dto.MarkedPlaceDTO;
+import com.artamonov.placeurclient.dto.AuthToken;
 import com.artamonov.placeurclient.service.ApiFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,11 +43,12 @@ public class TopPlacesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_top_places, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
-        Call<List<MarkedPlaceDTO>> callback = ApiFactory.getRatingService().getTopPlaces();
-        callback.enqueue(new Callback<List<MarkedPlaceDTO>>() {
+        Call<ListToken> callback = ApiFactory.getRatingService().getTopPlaces();
+        callback.enqueue(new Callback<ListToken>() {
             @Override
-            public void onResponse(Call<List<MarkedPlaceDTO>> call, Response<List<MarkedPlaceDTO>> response) {
-                list = response.body();
+            public void onResponse(Call<ListToken> call, Response<ListToken> response) {
+                ListToken token = response.body();
+                list = token.getList();
                 List<HashMap<String, Object>> array = new ArrayList<>();
                 for (int i = 0; i < list.size(); i++) {
                     MarkedPlaceDTO placeDTO = list.get(i);
@@ -67,7 +66,7 @@ public class TopPlacesFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<MarkedPlaceDTO>> call, Throwable t) {
+            public void onFailure(Call<ListToken> call, Throwable t) {
 
             }
         });
