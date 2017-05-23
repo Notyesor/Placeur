@@ -11,9 +11,9 @@ import android.widget.ListView;
 
 import com.artamonov.placeurclient.R;
 import com.artamonov.placeurclient.dto.MarkedPlaceDTO;
-import com.artamonov.placeurclient.dto.TokenDTO;
+import com.artamonov.placeurclient.dto.UserDTO;
 import com.artamonov.placeurclient.service.ApiFactory;
-import com.artamonov.placeurclient.service.TokenStore;
+import com.artamonov.placeurclient.store.Store;
 
 import java.util.List;
 
@@ -39,12 +39,13 @@ public class RecommendationsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recommendations, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
-        TokenDTO token = TokenStore.getToken(getActivity().getApplication());
-        Call<List<MarkedPlaceDTO>> call = ApiFactory.getRatingService().makeRecommendation(token.getUser().toString());
+        UserDTO user = Store.getUser(getActivity().getApplication().getApplicationContext());
+        Call<List<MarkedPlaceDTO>> call = ApiFactory.getRatingService().makeRecommendation(user.getId().toString());
         call.enqueue(new Callback<List<MarkedPlaceDTO>>() {
             @Override
             public void onResponse(Call<List<MarkedPlaceDTO>> call, Response<List<MarkedPlaceDTO>> response) {
                 list = response.body();
+                if (list == null) return;
                 String[] array = new String[list.size()];
                 for (int i = 0; i < list.size(); i++) {
                     MarkedPlaceDTO placeDTO = list.get(i);

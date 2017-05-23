@@ -9,25 +9,19 @@ public class UserDTO {
     private UUID id;
     @SerializedName("nickname")
     private String nickname;
-    @SerializedName("mail")
-    private String mail;
-    @SerializedName("name")
-    private String name;
-    @SerializedName("surname")
-    private String surname;
     @SerializedName("city")
     private UUID city;
     @SerializedName("password")
     private String password;
+    @SerializedName("similarity")
+    private Integer similarity;
 
-    public UserDTO(UUID id, String nickname, String mail, String name, String surname, UUID city, String password) {
+    public UserDTO(UUID id, String nickname, UUID city, String password, Integer similarity) {
         this.id = id;
         this.nickname = nickname;
-        this.mail = mail;
-        this.name = name;
-        this.surname = surname;
         this.city = city;
         this.password = password;
+        this.similarity = similarity;
     }
 
     public UUID getId() {
@@ -40,30 +34,6 @@ public class UserDTO {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public UUID getCity() {
@@ -80,5 +50,13 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getSimilarity() {
+        return similarity;
+    }
+
+    public void setSimilarity(Integer similarity) {
+        this.similarity = similarity;
     }
 }

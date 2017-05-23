@@ -11,5 +11,10 @@
             <param name="nickname"/>
             <param name="password"/>
         </method>
+        <method name="signup">
+            <param name="nickname"/>
+            <param name="password"/>
+            <param name="cityId"/>
+        </method>
     </service>
 </services>

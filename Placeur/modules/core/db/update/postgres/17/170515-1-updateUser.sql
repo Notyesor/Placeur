@@ -1,0 +1,1 @@
+drop index IDX_PLACEUR_USER_UK_MAIL ;

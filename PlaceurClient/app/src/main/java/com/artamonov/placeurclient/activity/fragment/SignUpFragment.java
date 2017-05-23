@@ -4,6 +4,8 @@ package com.artamonov.placeurclient.activity.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,10 +20,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.artamonov.placeurclient.R;
-import com.artamonov.placeurclient.dto.RegisterInfo;
-import com.artamonov.placeurclient.dto.TokenDTO;
+import com.artamonov.placeurclient.activity.MainActivity;
+import com.artamonov.placeurclient.dto.UserDTO;
 import com.artamonov.placeurclient.service.ApiFactory;
 import com.artamonov.placeurclient.service.AuthService;
+import com.artamonov.placeurclient.store.Store;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -35,11 +38,8 @@ import retrofit2.Response;
 public class SignUpFragment extends Fragment {
 
     EditText mNicknameView;
-    EditText mMailView;
     EditText mPasswordView;
     EditText mConfirmPasswordView;
-    EditText mNameView;
-    EditText mSurnameView;
     Spinner mCityView;
     View mProgressView;
     View mSignUpFormView;
@@ -55,15 +55,12 @@ public class SignUpFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         mNicknameView = (EditText) view.findViewById(R.id.nickname);
-        mMailView = (EditText) view.findViewById(R.id.email);
         mPasswordView = (EditText) view.findViewById(R.id.password);
         mConfirmPasswordView = (EditText) view.findViewById(R.id.confirm_password);
-        mNameView = (EditText) view.findViewById(R.id.name);
-        mSurnameView = (EditText) view.findViewById(R.id.surname);
         mCityView = (Spinner) view.findViewById(R.id.city);
         mProgressView = view.findViewById(R.id.signup_progress);
         mSignUpFormView = view.findViewById(R.id.signup_form_layout);
-        Button mSignUpButton = (Button) view.findViewById(R.id.login_sign_in_button);
+        Button mSignUpButton = (Button) view.findViewById(R.id.sign_up_button);
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,23 +77,24 @@ public class SignUpFragment extends Fragment {
         }
 
         mNicknameView.setError(null);
-        mMailView.setError(null);
         mPasswordView.setError(null);
         mConfirmPasswordView.setError(null);
-        mNameView.setError(null);
-        mSurnameView.setError(null);
 
         String nickname = mNicknameView.getText().toString();
-        String mail = mMailView.getText().toString();
         String password = mPasswordView.getText().toString();
         String confirmPassword = mConfirmPasswordView.getText().toString();
-        String name = mNameView.getText().toString();
-        String surname = mSurnameView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        if (!TextUtils.isEmpty(password) || !isPasswordValid(password)) {
+
+        if (!password.equals(confirmPassword)) {
+            mConfirmPasswordView.setError(getString(R.string.error_dublicate_password));
+            focusView = mConfirmPasswordView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -120,7 +118,7 @@ public class SignUpFragment extends Fragment {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mTask = new UserRegisterTask(nickname, password);
+            mTask = new UserRegisterTask(nickname, password, UUID.fromString("69f63779-d73c-8187-7aee-522c85ccbf6f"));
             mTask.execute((Void) null);
         }
     }
@@ -164,19 +162,13 @@ public class SignUpFragment extends Fragment {
     private class UserRegisterTask extends AsyncTask<Void, Void, Boolean> {
 
         String nickname;
-        String mail;
         String password;
-        String name;
-        String surname;
         UUID cityId;
-        TokenDTO mToken;
+        UserDTO mUser;
 
-        public UserRegisterTask(String nickname, String mail, String password, String name, String surname, UUID cityId) {
+        public UserRegisterTask(String nickname, String password, UUID cityId) {
             this.nickname = nickname;
-            this.mail = mail;
             this.password = password;
-            this.name = name;
-            this.surname = surname;
             this.cityId = cityId;
         }
 
@@ -184,15 +176,14 @@ public class SignUpFragment extends Fragment {
         protected Boolean doInBackground(Void... params) {
 
             AuthService service = ApiFactory.getAuthService();
-            RegisterInfo registerInfo = new RegisterInfo(nickname, mail, password, name, surname, cityId);
-            Call<TokenDTO> call = service.signUp(registerInfo);
+            Call<UserDTO> call = service.signUp(nickname, password, cityId);
             try {
-                Response<TokenDTO> response = call.execute();
+                Response<UserDTO> response = call.execute();
                 System.out.println(response.message());
                 if (response.isSuccessful()) {
-                    mToken = response.body();
+                    mUser = response.body();
                 }
-                if (mToken == null) return false;
+                if (mUser == null) return false;
             } catch (IOException e) {
                 System.out.println(e.getLocalizedMessage());
                 Toast toast = Toast.makeText(getContext(), "Проблемы с соединением", Toast.LENGTH_SHORT);
@@ -200,6 +191,24 @@ public class SignUpFragment extends Fragment {
                 return false;
             }
             return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            mTask = null;
+            showProgress(false);
+
+            if (success) {
+                Activity parentActivity = getActivity();
+                System.out.println(mUser.getNickname());
+                Store.setUser(mUser, getActivity().getApplication().getApplicationContext());
+                parentActivity.startActivity(new Intent(parentActivity, MainActivity.class));
+                parentActivity.finish();
+            } else {
+                Toast toast = Toast.makeText(getContext(), "Ошибка", Toast.LENGTH_SHORT);
+                toast.show();
+                mPasswordView.requestFocus();
+            }
         }
 
 

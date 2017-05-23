@@ -5,7 +5,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.artamonov.placeurclient.R;
@@ -14,8 +13,9 @@ import com.artamonov.placeurclient.activity.fragment.RecommendationsFragment;
 import com.artamonov.placeurclient.activity.fragment.SettingsFragment;
 import com.artamonov.placeurclient.activity.fragment.TopPlacesFragment;
 import com.artamonov.placeurclient.dto.MarkedPlaceDTO;
+import com.artamonov.placeurclient.dto.UserDTO;
 import com.artamonov.placeurclient.service.ApiFactory;
-import com.artamonov.placeurclient.service.TokenStore;
+import com.artamonov.placeurclient.store.Store;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,7 +24,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -56,7 +55,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        Toast toast = Toast.makeText(getApplicationContext(), TokenStore.getToken(getApplication().getApplicationContext()).getValue(), Toast.LENGTH_SHORT);
+        UserDTO user = Store.getUser(getApplication().getApplicationContext());
+        Toast toast = Toast.makeText(getApplicationContext(), "Welcome, " + user.getNickname() + "!", Toast.LENGTH_SHORT);
         toast.show();
 
 

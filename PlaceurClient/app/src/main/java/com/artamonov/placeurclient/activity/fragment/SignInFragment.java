@@ -20,16 +20,14 @@ import android.widget.Toast;
 
 import com.artamonov.placeurclient.R;
 import com.artamonov.placeurclient.activity.MainActivity;
-import com.artamonov.placeurclient.dto.Token;
-import com.artamonov.placeurclient.dto.TokenDTO;
+import com.artamonov.placeurclient.dto.UserDTO;
 import com.artamonov.placeurclient.service.ApiFactory;
 import com.artamonov.placeurclient.service.AuthService;
-import com.artamonov.placeurclient.service.TokenStore;
+import com.artamonov.placeurclient.store.Store;
 
 import java.io.IOException;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -84,7 +82,7 @@ public class SignInFragment extends Fragment {
         boolean cancel = false;
         View focusView = null;
 
-        if (!TextUtils.isEmpty(password) || !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -153,7 +151,7 @@ public class SignInFragment extends Fragment {
 
         private final String mNickname;
         private final String mPassword;
-        private TokenDTO mToken;
+        private UserDTO mUser;
 
         UserLoginTask(String login, String password) {
             mNickname = login;
@@ -164,14 +162,14 @@ public class SignInFragment extends Fragment {
         protected Boolean doInBackground(Void... params) {
 
             AuthService service = ApiFactory.getAuthService();
-            Call<TokenDTO> call = service.signIn(mNickname, mPassword);
+            Call<UserDTO> call = service.signIn(mNickname, mPassword);
             try {
-                Response<TokenDTO> response = call.execute();
+                Response<UserDTO> response = call.execute();
                 System.out.println(response.message());
                 if (response.isSuccessful()) {
-                    mToken = response.body();
+                    mUser = response.body();
                 }
-                if (mToken == null) return false;
+                if (mUser == null) return false;
             } catch (IOException e) {
                 System.out.println(e.getLocalizedMessage());
                 Toast toast = Toast.makeText(getContext(), "Проблемы с соединением", Toast.LENGTH_SHORT);
@@ -186,19 +184,15 @@ public class SignInFragment extends Fragment {
             mAuthTask = null;
             showProgress(false);
 
-            if (success && mToken != null) {
-                if (mToken.getValue() == null) {
-                    Toast toast = Toast.makeText(getContext(), "Неправильное имя пользователя/пароль.", Toast.LENGTH_SHORT);
-                    toast.show();
-                    mPasswordView.requestFocus();
-                } else {
-                    Activity parentActivity = getActivity();
-                    System.out.println(mToken.getValue());
-                    TokenStore.setToken(getActivity().getApplication().getApplicationContext(), mToken);
-                    parentActivity.startActivity(new Intent(parentActivity, MainActivity.class));
-                    parentActivity.finish();
-                }
+            if (success) {
+                Activity parentActivity = getActivity();
+                System.out.println(mUser.getNickname());
+                Store.setUser(mUser, getActivity().getApplication().getApplicationContext());
+                parentActivity.startActivity(new Intent(parentActivity, MainActivity.class));
+                parentActivity.finish();
             } else {
+                Toast toast = Toast.makeText(getContext(), "Неправильное имя пользователя/пароль.", Toast.LENGTH_SHORT);
+                toast.show();
                 mPasswordView.requestFocus();
             }
         }

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.UUID;
 
 @Service(AuthorizationService.NAME)
 public class AuthorizationServiceBean implements AuthorizationService {
@@ -29,7 +30,14 @@ public class AuthorizationServiceBean implements AuthorizationService {
     }
 
     @Override
-    public String register(String serializedRegisterInfo) {
-        return null;
+    public String signup(String nickname, String password, UUID cityId) {
+        if (databaseService.USER().findByNickname(nickname) == null) {
+            boolean status = databaseService.USER().create(nickname, cityId, password, 0);
+            if (status) {
+                UserDTO userDTO = databaseService.USER().findByNickname(nickname);
+                return new Gson().toJson(userDTO);
+            }
+        }
+        return new Gson().toJson(null);
     }
 }

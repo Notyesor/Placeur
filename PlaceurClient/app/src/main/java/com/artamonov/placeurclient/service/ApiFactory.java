@@ -49,6 +49,6 @@ public class ApiFactory {
     }
 
     private class BuildConfig {
-        private static final String API_ENDPOINT = "http://192.168.43.92:8080";
+        private static final String API_ENDPOINT = "http://192.168.0.19:8080";
     }
 }

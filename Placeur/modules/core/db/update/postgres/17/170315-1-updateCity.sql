@@ -1,0 +1,1 @@
+drop index IDX_PLACEUR_CITY_UK_LOCATION_ID ;
