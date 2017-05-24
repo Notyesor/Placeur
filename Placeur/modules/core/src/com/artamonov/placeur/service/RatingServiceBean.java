@@ -21,6 +21,9 @@ public class RatingServiceBean implements RatingService {
         UUID uuid = UUID.fromString(id);
         List<MarkedPlaceDTO> list = RecommenderFactory.createRecommender(Recommenders.COS, databaseService)
                 .calculateRatings(uuid);
+        for (MarkedPlaceDTO place : list) {
+            if (Double.isNaN(place.getMark())) place.setMark(0d);
+        }
         return new Gson().toJson(new ListToken(list, "ok"));
     }
 

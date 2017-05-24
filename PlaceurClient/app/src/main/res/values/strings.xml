@@ -27,4 +27,10 @@
     <string-array name="cities">
         <item>Самара</item>
     </string-array>
+    <string-array name="similarity">
+        <item>Косинусная мера</item>
+        <item>Евклидово расстояние</item>
+        <item>Корреляция Пирсона</item>
+        <item>Манхэттенское расстояние</item>
+    </string-array>
 </resources>
