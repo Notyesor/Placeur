@@ -1,5 +1,7 @@
 package com.artamonov.placeurclient.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import com.artamonov.placeurclient.activity.fragment.TopPlacesFragment;
 import com.artamonov.placeurclient.dto.ListToken;
 import com.artamonov.placeurclient.dto.MarkedPlaceDTO;
 import com.artamonov.placeurclient.dto.AuthToken;
+import com.artamonov.placeurclient.dto.PlaceDTO;
 import com.artamonov.placeurclient.dto.UserDTO;
 import com.artamonov.placeurclient.service.ApiFactory;
 import com.artamonov.placeurclient.store.Store;
@@ -101,17 +104,25 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Marker marker = googleMap.addMarker(markerOptions);
             marker.setTag(placeDTO);
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-            googleMap.setOnInfoWindowClickListener(new OnPlaceClickListener());
+            googleMap.setOnInfoWindowClickListener(new OnPlaceClickListener(this));
             googleMap.setBuildingsEnabled(true);
         }
     }
 
     private class OnPlaceClickListener implements GoogleMap.OnInfoWindowClickListener {
 
+        Activity activity;
+
+        OnPlaceClickListener(Activity activity) {
+            this.activity = activity;
+        }
 
         @Override
         public void onInfoWindowClick(Marker marker) {
-
+            PlaceDTO place = (PlaceDTO) marker.getTag();
+            Intent intent = new Intent(activity, PlaceActivity.class);
+            intent.putExtra("place", place.getId());
+            startActivity(intent);
         }
     }
 }
