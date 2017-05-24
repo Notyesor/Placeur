@@ -66,6 +66,7 @@ public class UserDAO implements IUserDAO {
             return new UserDTO(user.getId(), user.getNickname(),
                     user.getCity().getId(), user.getPassword(), user.getSimilarity());
         } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
             return null;
         }
     }

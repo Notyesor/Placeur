@@ -7,9 +7,11 @@
     <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/place_title"
-        android:text="Place title"/>
+        android:text="Place title"
+        android:textSize="20sp"/>
     <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/place_address"
-        android:text="Place address"/>
+        android:text="Place address"
+        android:textSize="15sp"/>
 </LinearLayout>

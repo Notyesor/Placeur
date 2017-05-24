@@ -28,6 +28,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         UserDTO user = Store.getUser(getApplication().getApplicationContext());
-        Toast toast = Toast.makeText(getApplicationContext(), "Welcome, " + user.getNickname() + "!", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getApplicationContext(), "Добро пожаловать, " + user.getNickname() + "!", Toast.LENGTH_SHORT);
         toast.show();
 
 
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         adapter.addFragment(mapFragment, "Карта");
         adapter.addFragment(new RecommendationsFragment(), "Рекомендации");
         adapter.addFragment(new TopPlacesFragment(), "Топ мест");
-        adapter.addFragment(new SettingsFragment(), "Настройки");
+        adapter.addFragment(new SettingsFragment(), "Профиль");
         viewPager.setAdapter(adapter);
     }
 
@@ -119,9 +120,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         @Override
         public void onInfoWindowClick(Marker marker) {
-            PlaceDTO place = (PlaceDTO) marker.getTag();
+            MarkedPlaceDTO place = (MarkedPlaceDTO) marker.getTag();
             Intent intent = new Intent(activity, PlaceActivity.class);
-            intent.putExtra("place", place.getId());
+            intent.putExtra("place", new Gson().toJson(place));
             startActivity(intent);
         }
     }

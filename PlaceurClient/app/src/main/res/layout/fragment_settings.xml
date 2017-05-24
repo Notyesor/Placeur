@@ -41,7 +41,7 @@
                 android:layout_toEndOf="@+id/imageView" />
 
             <TextView
-                android:text="City"
+                android:text="Самара"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageView"
@@ -52,13 +52,6 @@
                 android:layout_alignParentEnd="true"
                 android:textSize="24sp" />
         </RelativeLayout>
-
-        <TextView
-            android:text="similarity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/similarityView"
-            android:textSize="30sp" />
 
         <Button
             android:layout_width="match_parent"
@@ -71,12 +64,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cityButton" />
-
-        <Button
-            android:text="Выбрать меру схожести"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/similarityButton" />
 
         <Button
             android:text="Сменить пароль"

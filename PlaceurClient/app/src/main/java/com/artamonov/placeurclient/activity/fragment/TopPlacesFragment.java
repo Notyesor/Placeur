@@ -54,7 +54,7 @@ public class TopPlacesFragment extends Fragment {
                     MarkedPlaceDTO placeDTO = list.get(i);
                     HashMap<String, Object> hm = new HashMap<>();
                     hm.put(PLACE_TITLE, placeDTO.getPlaceDTO().getTitle());
-                    hm.put(PLACE_ADDRESS, placeDTO.getMark().toString());
+                    hm.put(PLACE_ADDRESS, placeDTO.getPlaceDTO().getAddress());
                     array.add(hm);
                 }
                 SimpleAdapter adapter = new SimpleAdapter(getContext(),

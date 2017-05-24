@@ -25,21 +25,11 @@
             android:layout_width="wrap_content"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:id="@+id/mapFragment"
-            android:layout_below="@+id/appBarLayout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_height="250sp" />
-
-        <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/ratingBar"
-            android:layout_toRightOf="@+id/ratingBar"
-            android:layout_toEndOf="@+id/ratingBar"
-            android:id="@+id/textView" />
 
         <TextView
             android:text="5.0"
@@ -68,6 +58,38 @@
             android:id="@+id/rateButton"
             android:layout_below="@+id/mapFragment"
             android:layout_height="45sp" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rateView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/addressView"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textSize="18sp" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/descriptionView"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/addressView"
+            android:textSize="18sp" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/descriptionView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/comments" />
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -20,7 +20,7 @@
     <string name="error_incorrect_password">Неправильный пароль</string>
     <string name="error_field_required">Это поле нужно заполнить</string>
     <string name="permission_rationale">"Разрешения на доступ к контенту необходимы для доработки электронной почты."</string>
-    <string name="subtitle">"Поиск заведений быстрого питания"</string>
+    <string name="subtitle">"Система поиска мест досуга"</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

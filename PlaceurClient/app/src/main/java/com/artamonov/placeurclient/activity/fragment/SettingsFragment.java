@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.artamonov.placeurclient.R;
 import com.artamonov.placeurclient.activity.AuthActivity;
+import com.artamonov.placeurclient.dto.UserDTO;
+import com.artamonov.placeurclient.store.Store;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,9 +26,7 @@ public class SettingsFragment extends Fragment {
 
     TextView mNicknameView;
     TextView mCityView;
-    TextView mSimilarityView;
 
-    DialogFragment similarityDialog;
     DialogFragment cityDialog;
 
 
@@ -41,15 +41,12 @@ public class SettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         mNicknameView = (TextView) view.findViewById(R.id.loginView);
         mCityView = (TextView) view.findViewById(R.id.cityView);
-        mSimilarityView = (TextView) view.findViewById(R.id.similarityView);
 
         Button helpButton = (Button) view.findViewById(R.id.helpButton);
         Button cityButton = (Button) view.findViewById(R.id.cityButton);
-        Button similarityButton = (Button) view.findViewById(R.id.similarityButton);
         Button changePasswordButton = (Button) view.findViewById(R.id.changePasswordButton);
         Button logoutButton = (Button) view.findViewById(R.id.logoutButton);
 
-        similarityDialog = new SimilarityChangeDialogFragment();
         cityDialog = new CityChangeAlertDialog();
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -60,12 +57,6 @@ public class SettingsFragment extends Fragment {
                 parentActivity.finish();
             }
         });
-        similarityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                similarityDialog.show(getFragmentManager(), "simdlg");
-            }
-        });
         cityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +64,8 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        UserDTO user = Store.getUser(getActivity().getApplication().getApplicationContext());
+        mNicknameView.setText(user.getNickname());
         return view;
     }
 

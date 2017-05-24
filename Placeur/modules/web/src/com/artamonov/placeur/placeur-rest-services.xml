@@ -5,6 +5,9 @@
             <param name="id"/>
         </method>
         <method name="getTopPlaces"/>
+        <method name="getRatings">
+            <param name="id"/>
+        </method>
     </service>
     <service name="placeur_AuthorizationService">
         <method name="signin">

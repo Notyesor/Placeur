@@ -4,7 +4,6 @@ import com.artamonov.placeur.dto.*;
 import com.artamonov.placeur.recommender.RecommenderFactory;
 import com.artamonov.placeur.recommender.Recommenders;
 import com.google.gson.Gson;
-import com.haulmont.cuba.core.Persistence;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -25,6 +24,18 @@ public class RatingServiceBean implements RatingService {
             if (Double.isNaN(place.getMark())) place.setMark(0d);
         }
         return new Gson().toJson(new ListToken(list, "ok"));
+    }
+
+    @Override
+    public String getRatings(String id) {
+        List<RatingDTO> list = databaseService.RATING().findByPlace(UUID.fromString(id));
+        List<PublicRatingDTO> result = new ArrayList<>();
+        for (RatingDTO ratingDTO : list) {
+            UserDTO user = databaseService.USER().findById(ratingDTO.getUser());
+            PublicRatingDTO publicRatingDTO = new PublicRatingDTO(ratingDTO, user.getNickname());
+            result.add(publicRatingDTO);
+        }
+        return new Gson().toJson(new RatingsToken(result, "ok"));
     }
 
     @Override
